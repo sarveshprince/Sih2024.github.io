@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bed Availability</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #008080;
+            padding: 10px;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #005f5f;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #008080;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #008080;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #005f5f;
+        }
+        .hospital-list {
+            margin-top: 20px;
+        }
+        .hospital-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .hospital-item:hover {
+            background-color: #f9f9f9;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
+        }
+    </style>
+    <script>
+        // Sample data for Indian cities
+        const hospitalData = {
+            "Delhi": {
+                "AIIMS Delhi": { totalBeds: 30, availableBeds: 24 },
+                "Fortis Hospital": { totalBeds: 20, availableBeds: 18 },
+                "Max Super Speciality": { totalBeds: 15, availableBeds: 12 },
+                "Safdarjung Hospital": { totalBeds: 25, availableBeds: 20 },
+                "Medanta - The Medicity": { totalBeds: 18, availableBeds: 10 }
+            },
+            "Mumbai": {
+                "Kokilaben Dhirubhai Ambani Hospital": { totalBeds: 28, availableBeds: 22 },
+                "Lilavati Hospital": { totalBeds: 22, availableBeds: 15 },
+                "Hiranandani Hospital": { totalBeds: 17, availableBeds: 10 },
+                "Breach Candy Hospital": { totalBeds: 20, availableBeds: 12 },
+                "Jaslok Hospital": { totalBeds: 15, availableBeds: 8 }
+            },
+            "Bengaluru": {
+                "Narayana Health": { totalBeds: 25, availableBeds: 20 },
+                "Manipal Hospital": { totalBeds: 20, availableBeds: 16 },
+                "Fortis La Femme": { totalBeds: 18, availableBeds: 12 },
+                "Apollo Hospital": { totalBeds: 22, availableBeds: 18 },
+                "Sakra Premium Clinic": { totalBeds: 12, availableBeds: 8 }
+            },
+            "Chennai": {
+                "Fortis Malar Hospital": { totalBeds: 20, availableBeds: 18 },
+                "Apollo Hospitals": { totalBeds: 30, availableBeds: 25 },
+                "KMC Hospital": { totalBeds: 15, availableBeds: 10 },
+                "Global Hospitals": { totalBeds: 18, availableBeds: 14 },
+                "SIMS Hospital": { totalBeds: 22, availableBeds: 17 }
+            },
+            "Kolkata": {
+                "AMRI Hospitals": { totalBeds: 24, availableBeds: 18 },
+                "Fortis Hospital": { totalBeds: 20, availableBeds: 12 },
+                "Sukhi Hospital": { totalBeds: 18, availableBeds: 10 },
+                "Belle Vue Clinic": { totalBeds: 22, availableBeds: 15 },
+                "Kolkata Medical College": { totalBeds: 15, availableBeds: 7 }
+            }
+        };
+
+        function showHospitals() {
+            const city = document.getElementById('city').value;
+            const hospitalList = document.getElementById('hospital-list');
+
+            // Clear previous results
+            hospitalList.innerHTML = '';
+
+            if (city) {
+                const hospitals = hospitalData[city];
+                if (hospitals) {
+                    for (const [name, data] of Object.entries(hospitals)) {
+                        const div = document.createElement('div');
+                        div.className = 'hospital-item';
+                        div.innerHTML = `<a href="hospital_details.html?name=${encodeURIComponent(name)}&city=${encodeURIComponent(city)}"><strong>${name}</strong></a>`;
+                        hospitalList.appendChild(div);
+                    }
+                } else {
+                    hospitalList.innerHTML = '<p>No data available for the selected city.</p>';
+                }
+            } else {
+                hospitalList.innerHTML = '<p>Please enter a city.</p>';
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="create_abhi_id.html">Create ABHI ID</a>
+        <a href="contact_us.html">Contact Us</a>
+        <a href="about_us.html">About Us</a>
+    </div>
+
+    <div class="container">
+        <h2>Check Bed Availability</h2>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" id="city" placeholder="Enter City (e.g., Delhi)">
+        </div>
+        <button onclick="showHospitals()">Check Availability</button>
+         
+        <div id="hospital-list" class="hospital-list">
+            <!-- Hospital data will be displayed here -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Medical Center. All rights reserved.</p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #008080;
+            padding: 10px;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #005f5f;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .hospital-details h2 {
+            color: #008080;
+        }
+        .bed-icon {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        .bed-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
+        }
+        /* Styles for the popup */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            display: none;
+            text-align: left;
+        }
+        .popup h3 {
+            margin-top: 0;
+            color: #008080;
+        }
+        .popup p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .close-btn {
+            background-color: #008080;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        /* Styles for the blurred background */
+        .blurred-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+    <script>
+        const patientData = {
+            name: "John Doe",
+            age: 45,
+            id: "P12345",
+            admissionDate: "2024-08-10"
+        };
+
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                name: params.get('name'),
+                city: params.get('city')
+            };
+        }
+
+        function showHospitalDetails(name, data) {
+            document.getElementById('hospital-name').innerText = name;
+            document.getElementById('total-beds').innerText = `Total Beds: ${data.totalBeds}`;
+            document.getElementById('available-beds').innerText = `Available Beds: ${data.availableBeds}`;
+            document.getElementById('bed-icons').innerHTML = generateBedIcons(data.totalBeds, data.availableBeds);
+        }
+
+        function generateBedIcons(totalBeds, availableBeds) {
+            let icons = '';
+            for (let i = 0; i < totalBeds; i++) {
+                const iconClass = i < availableBeds ? 'available' : 'full';
+                icons += `<span class="bed-icon ${iconClass}" onclick="showPatientDetails(${iconClass === 'full'})">${iconSVG(iconClass)}</span>`;
+            }
+            return icons;
+        }
+
+        function iconSVG(status) {
+            if (status === 'available') {
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green" width="50" height="50">
+                        <path d="M20 6h-2V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h2v2c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-2h2c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-12 2V4h8v4h-8zm10 14H6v-2h12v2zm0-4H6V8h12v10z"/>
+                    </svg>
+                `;
+            } else {
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="50" height="50">
+                        <path d="M20 6h-2V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h2v2c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-2h2c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-12 2V4h8v4h-8zm10 14H6v-2h12v2zm0-4H6V8h12v10z"/>
+                    </svg>
+                `;
+            }
+        }
+
+        function showPatientDetails(isOccupied) {
+            if (isOccupied) {
+                document.getElementById('popup').style.display = 'block';
+                document.getElementById('blurred-background').style.display = 'block';
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('blurred-background').style.display = 'none';
+        }
+
+        window.onload = function() {
+            const params = getQueryParams();
+            if (params.name && params.city) {
+                const hospitalData = {
+                    "Delhi": {
+                        "AIIMS Delhi": { totalBeds: 60, availableBeds: 45 },
+                        "Fortis Hospital": { totalBeds: 55, availableBeds: 35 },
+                        "Max Super Speciality": { totalBeds: 50, availableBeds: 37 },
+                        "Safdarjung Hospital": { totalBeds: 70, availableBeds: 40 },
+                        "Medanta - The Medicity": { totalBeds: 65, availableBeds: 42 }
+                    },
+                    "Mumbai": {
+                        "Kokilaben Dhirubhai Ambani Hospital": { totalBeds: 60, availableBeds: 38 },
+                        "Lilavati Hospital": { totalBeds: 50, availableBeds: 32 },
+                        "Hiranandani Hospital": { totalBeds: 55, availableBeds: 40 },
+                        "Breach Candy Hospital": { totalBeds: 65, availableBeds: 45 },
+                        "Jaslok Hospital": { totalBeds: 75, availableBeds: 50 }
+                    },
+                    "Bengaluru": {
+                        "Narayana Health": { totalBeds: 60, availableBeds: 48 },
+                        "Manipal Hospital": { totalBeds: 70, availableBeds: 40 },
+                        "Fortis La Femme": { totalBeds: 55, availableBeds: 38 },
+                        "Apollo Hospital": { totalBeds: 65, availableBeds: 42 },
+                        "Sakra Premium Clinic": { totalBeds: 60, availableBeds: 37 }
+                    },
+                    "Chennai": {
+                        "Fortis Malar Hospital": { totalBeds: 65, availableBeds: 43 },
+                        "Apollo Hospitals": { totalBeds: 70, availableBeds: 50 },
+                        "KMC Hospital": { totalBeds: 55, availableBeds: 35 },
+                        "Global Health City": { totalBeds: 60, availableBeds: 48 },
+                        "Billroth Hospitals": { totalBeds: 50, availableBeds: 37 }
+                    },
+                    "Kolkata": {
+                        "AMRI Hospital": { totalBeds: 70, availableBeds: 45 },
+                        "Fortis Hospital": { totalBeds: 60, availableBeds: 38 },
+                        "Apollo Gleneagles Hospital": { totalBeds: 75, availableBeds: 50 },
+                        "Peerless Hospital": { totalBeds: 65, availableBeds: 42 },
+                        "Woodlands Multispeciality Hospital": { totalBeds: 55, availableBeds: 35 }
+                    }
+                };
+                showHospitalDetails(params.name, hospitalData[params.city][params.name]);
+            }
+        };
+    </script>
+</head>
+<body>
+
+    <div id="blurred-background" class="blurred-background" onclick="closePopup()"></div>
+
+    <div id="popup" class="popup">
+        <h3>Patient Details</h3>
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Age:</strong> 45</p>
+        <p><strong>Patient ID:</strong> P12345</p>
+        <p><strong>Date of Admission:</strong> 2024-08-10</p>
+        <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+
+    <div class="navbar">
+        <a href="home.html">Home</a>
+        <a href="create_abhi_id.html">Create ABHI ID</a>
+        <a href="contact_us.html">Contact Us</a>
+        <a href="about_us.html">About Us</a>
+    </div>
+
+    <div class="container">
+        <h2>Hospital Details</h2>
+        <div id="hospital-details" class="hospital-details">
+            <h3 id="hospital-name"></h3>
+            <div id="total-beds"></div>
+            <div id="available-beds"></div>
+            <div>Bed Availability:</div>
+            <div id="bed-icons" class="bed-container">
+                <!-- Bed icons will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Medical Center. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
