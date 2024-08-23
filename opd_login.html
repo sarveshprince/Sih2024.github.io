@@ -3,117 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPD Login</title>
+    <title>Create New Password</title>
     <style>
+        /* Global Styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
             margin: 0;
             padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
+
+        /* Navigation Bar */
         .navbar {
-            overflow: hidden;
             background-color: #008080;
-            padding: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .navbar a {
-            float: left;
-            display: block;
-            color: #ffffff;
-            text-align: center;
-            padding: 14px 20px;
+            color: white;
             text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            font-weight: bold;
         }
+
         .navbar a:hover {
             background-color: #005f5f;
-            color: white;
+            border-radius: 4px;
         }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
         .container {
-            max-width: 500px;
-            margin: 80px auto;
-            padding: 20px;
-            background-color: #ffffff;
+            background-color: white;
+            padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .container h2 {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        h2 {
             margin-bottom: 20px;
             color: #008080;
         }
+
         input[type="text"], input[type="password"] {
-            width: 100%;
             padding: 12px;
-            margin: 8px 0 20px 0;
-            display: inline-block;
+            width: 100%;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
-            box-sizing: border-box;
             border-radius: 4px;
+            font-size: 16px;
         }
+
         button {
+            padding: 12px 20px;
+            border: none;
             background-color: #008080;
             color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
             border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
         }
+
         button:hover {
             background-color: #005f5f;
         }
+
+        p {
+            margin-top: 20px;
+            color: #555;
+        }
+
+        a {
+            color: #008080;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
         .footer {
             text-align: center;
-            margin-top: 40px;
-            color: #777;
+            padding: 15px;
+            background-color: #008080;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
         }
-        .reg{
-            text-align: center;
-        }
-        .input-box .icon {
-  position:absolute;
-  right:8px;
-  top:50%;
-  color: #fff;
-  transform: translateY(-50%);
-}
     </style>
 </head>
 <body>
 
+    <!-- Navigation Bar -->
     <div class="navbar">
-        <a href="index.html">Home</a>
-        <a href="create_abhi_id.html">Create ABHI ID</a>
-        <a href="contact_us.html">Contact Us</a>
-        <a href="about_us.html">About Us</a>
+        <div class="logo">Hospital Management System</div>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="#">Outpatients</a>
+            <a href="#">Doctors</a>
+            <a href="#">Appointments</a>
+            <a href="contact_us.html">Contact</a>
+        </div>
     </div>
 
+    <!-- Main Content -->
     <div class="container">
-        <h2>OPD Login</h2>
-        <form>
-            <label for="username"><b>ABHA ID</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
-            <span class="icon">
-                <ion-icon name="lock-closed"></ion-icon>
-            </span>
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-
-            <button type="submit">Login</button>
-            <br><br>
-            <div class="reg">Or Create an ABHA ID   
-            <a href="https://ors.gov.in/healthid/index.jsp?NICSecurityORS=X8XW-D76K-CTNY-LBOF-3T8T-BOK9-5WU8-MESN">Register now</a>
-            </div>
+        <h2>Create Password</h2>
+        
+        <form id="passwordForm">
+            <input type="text" name="abha_id" placeholder="Enter your ABHA ID" required>
+            <input type="password" name="new_password" placeholder="Enter new password" required>
+            <input type="password" name="confirm_new_password" placeholder="Confirm new password" required>
+            <button type="submit">Log In</button>
         </form>
 
+        <p>If you don't have an ABHA ID, <a href="/create_abha">create ABHA ID</a></p>
     </div>
 
+    <!-- Footer -->
     <div class="footer">
-        <p>&copy; 2024 Medical Center. All rights reserved.</p>
+        © 2024 Hospital Management System | Developed by [Your Name]
     </div>
-    <script src='https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js'></script>
-    <script src='https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js'></script>
+
+    <script>
+        document.getElementById('passwordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            // Redirect to token.html
+            window.location.href = 'token.html';
+        });
+    </script>
 
 </body>
 </html>
