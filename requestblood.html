@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select City - Blood Bank</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 50%;
+            font-size: 1.2em;
+            border: 1px solid #008080;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #005f5f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Your City</h1>
+        <form id="cityForm">
+            <input type="text" id="cityInput" name="city" placeholder="Enter City (e.g., Delhi, Chennai, Mumbai)" required>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('cityForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var city = document.getElementById('cityInput').value.trim().toLowerCase();
+            var validCities = ['delhi', 'chennai', 'goa', 'tamilnadu', 'mumbai'];
+            
+            if (validCities.includes(city)) {
+                window.location.href = 'Displayhos.html?city=' + encodeURIComponent(city);
+            } else {
+                alert('Please enter a valid city: Delhi, Chennai, Goa, Tamilnadu, Mumbai');
+            }
+        });
+    </script>
+</body>
+</html>

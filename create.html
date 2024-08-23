@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Token</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .navbar {
+            background-color: #008080;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            background-color: #005f5f;
+            border-radius: 4px;
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #008080;
+        }
+        input[type="text"], input[type="number"], textarea {
+            padding: 10px;
+            font-size: 1em;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #008080;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            max-width: 400px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #005f5f;
+        }
+        /* Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .popup.active {
+            display: block;
+        }
+        .popup h3 {
+            margin-top: 0;
+            color: #008080;
+        }
+        .popup button {
+            margin-top: 10px;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">Hospital Management System</div>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="#">Outpatients</a>
+            <a href="#">Doctors</a>
+            <a href="#">Appointments</a>
+            <a href="contact_us.html">Contact</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Create New Token</h2>
+        <form id="createTokenForm" onsubmit="return handleSubmit()">
+            <input type="text" id="name" name="name" placeholder="Full Name" required>
+            <input type="number" id="age" name="age" placeholder="Age" required>
+            <textarea id="reason" name="reason" placeholder="Reason for Admission" rows="4" required></textarea>
+            <input type="text" id="preferred_time" name="preferred_time" placeholder="Preferred Time" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h3>Token Created</h3>
+        <p id="popupMessage"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        let tokenNumber = 1; // Initialize token number
+        
+        function handleSubmit() {
+            const name = document.getElementById('name').value;
+            const popupMessage = document.getElementById('popupMessage');
+            popupMessage.textContent = `Token Number: ${tokenNumber}\nPatient Name: ${name}`;
+            
+            // Increment the token number for the next submission
+            tokenNumber++;
+            
+            // Show the popup
+            document.getElementById('popup').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+            
+            // Prevent the form from submitting
+            return false;
+        }
+
+        function closePopup() {
+            document.getElementById('popup').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Banks in Selected City</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .hospital-list {
+            list-style-type: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .hospital-list li {
+            background-color: #008080;
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hospital-list li:hover {
+            background-color: #005f5f;
+        }
+        .blood-details {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var city = urlParams.get('city');
+            var hospitals = {
+                'delhi': [
+                    { name: 'AIIMS, New Delhi', bloodGroups: 'A+, B+, O-, AB-', contact: '+91-11-2658-8500' },
+                    { name: 'Sir Ganga Ram Hospital', bloodGroups: 'A-, B+, O+, AB+', contact: '+91-11-2575-0000' },
+                    { name: 'Fortis Hospital, Delhi', bloodGroups: 'A+, O+, B+', contact: '+91-11-4277-6222' },
+                    { name: 'BLK Super Specialty Hospital', bloodGroups: 'O-, B-, AB-', contact: '+91-11-3040-3040' },
+                    { name: 'Max Super Specialty Hospital', bloodGroups: 'A-, AB+, B+', contact: '+91-11-2651-5050' }
+                ],
+                'mumbai': [
+                    { name: 'Fortis Hospital, Mumbai', bloodGroups: 'A-, B+, O+, AB+', contact: '+91-22-6621-4444' },
+                    { name: 'Lilavati Hospital, Mumbai', bloodGroups: 'A+, B-, O-, AB+', contact: '+91-22-2675-1000' },
+                    { name: 'Kokilaben Dhirubhai Ambani Hospital', bloodGroups: 'A+, O-, AB-', contact: '+91-22-3099-9999' },
+                    { name: 'Breach Candy Hospital', bloodGroups: 'A-, B+, AB+', contact: '+91-22-2366-7788' },
+                    { name: 'Hiranandani Hospital, Mumbai', bloodGroups: 'O+, B+, AB-', contact: '+91-22-2576-6666' }
+                ],
+                'chennai': [
+                    { name: 'Apollo Hospital, Chennai', bloodGroups: 'A+, B-, O+, AB+', contact: '+91-44-2829-3333' },
+                    { name: 'Fortis Malar Hospital', bloodGroups: 'A-, B+, AB-', contact: '+91-44-2491-4730' },
+                    { name: 'Sri Ramachandra Medical Centre', bloodGroups: 'A+, B+, O-', contact: '+91-44-4592-8500' },
+                    { name: 'MIOT International', bloodGroups: 'O+, A-, AB-', contact: '+91-44-4200-2288' },
+                    { name: 'Global Hospitals, Chennai', bloodGroups: 'A+, B-, AB+', contact: '+91-44-4477-7000' }
+                ],
+                'goa': [
+                    { name: 'Goa Medical College', bloodGroups: 'A+, B+, O-, AB+', contact: '+91-832-222-1234' },
+                    { name: 'Santoshi Hospital', bloodGroups: 'A-, B-, O+, AB-', contact: '+91-832-223-2345' },
+                    { name: 'Shri Manohar Hospital', bloodGroups: 'O+, B-, A-, AB+', contact: '+91-832-224-3456' },
+                    { name: 'Kasturba Hospital', bloodGroups: 'A+, B-, O-, AB+', contact: '+91-832-225-4567' },
+                    { name: 'Goa University Hospital', bloodGroups: 'B+, O+, A-, AB-', contact: '+91-832-226-5678' }
+                ],
+                'tamilnadu': [
+                    { name: 'CMBT Hospital, Chennai', bloodGroups: 'A-, B+, O+, AB+', contact: '+91-44-2345-6789' },
+                    { name: 'St. Isabel’s Hospital, Chennai', bloodGroups: 'O-, A+, AB-', contact: '+91-44-2356-7890' },
+                    { name: 'Government Hospital, Coimbatore', bloodGroups: 'B+, O+, A-, AB+', contact: '+91-422-123-4567' },
+                    { name: 'Sree Chitra Tirunal Institute, Trivandrum', bloodGroups: 'A+, B-, O-, AB+', contact: '+91-471-259-8181' },
+                    { name: 'Rajan Hospital, Madurai', bloodGroups: 'A-, O+, B-, AB+', contact: '+91-452-239-6666' }
+                ]
+            };
+
+            var hospitalList = hospitals[city];
+            if (hospitalList) {
+                var listElement = document.querySelector('.hospital-list');
+                hospitalList.forEach(function(hospital, index) {
+                    var listItem = document.createElement('li');
+                    listItem.textContent = hospital.name;
+                    listItem.setAttribute('onclick', 'showBloodDetails("hospital' + (index + 1) + '")');
+                    listElement.appendChild(listItem);
+
+                    var bloodDetails = document.createElement('div');
+                    bloodDetails.id = 'hospital' + (index + 1);
+                    bloodDetails.className = 'blood-details';
+                    bloodDetails.innerHTML = '<h2>' + hospital.name + '</h2>' +
+                                             '<p><strong>Available Blood Groups:</strong> ' + hospital.bloodGroups + '</p>' +
+                                             '<p><strong>Contact:</strong> ' + hospital.contact + '</p>';
+                    listElement.parentElement.appendChild(bloodDetails);
+                });
+            } else {
+                document.querySelector('.container').innerHTML = '<h2>No hospitals found for ' + city + '</h2>';
+            }
+        });
+
+        function showBloodDetails(hospitalId) {
+            var details = document.getElementsByClassName('blood-details');
+            for (var i = 0; i < details.length; i++) {
+                details[i].style.display = 'none';
+            }
+            document.getElementById(hospitalId).style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Hospitals in Selected City</h1>
+        <ul class="hospital-list">
+        </ul>
+    </div>
+</body>
+</html>

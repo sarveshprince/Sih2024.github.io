@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Blood</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #008080;
+            padding: 10px;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #005f5f;
+            color: white;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1 {
+            color: #008080;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1em;
+            margin: 10px 0;
+            border: 1px solid #008080;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+        }
+        button {
+            background-color: #008080;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005f5f;
+        }
+        .message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            border: 1px solid #008080;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            z-index: 1000;
+        }
+        .message p {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        .message button {
+            background-color: #28a745;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .message button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="opd_login.html">OPD</a>
+        <a href="bed_availability.html">Bed Availability</a>
+        <a href="blood_bank.html">Blood Bank</a>
+        <a href="contact_us.html">Contact Us</a>
+        <a href="about_us.html">About Us</a>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="container">
+        <h1>Donate Blood</h1>
+        <p>Please fill out the form below to register as a blood donor.</p>
+        <form id="donateForm">
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email Address" required>
+            <input type="tel" id="phone" placeholder="Phone Number" required>
+            <input type="text" id="bloodType" placeholder="Blood Type" required>
+            <input type="text" id="city" placeholder="City" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Confirmation Message -->
+    <div class="message" id="confirmationMessage">
+        <p>Your request has been sent successfully!</p>
+        <p>You will receive a call soon from our side to get more information about donating blood.</p>
+        <button onclick="closeMessage()">OK</button>
+    </div>
+
+    <script>
+        document.getElementById('donateForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('confirmationMessage').style.display = 'block';
+        });
+
+        function closeMessage() {
+            document.getElementById('confirmationMessage').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>

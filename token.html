@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token and Waiting Queue</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .navbar {
+            background-color: #008080;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            background-color: #005f5f;
+            border-radius: 4px;
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #008080;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .suggestions {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            display: none;
+        }
+        .suggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestions div:hover {
+            background-color: #f0f0f0;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #008080;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            max-width: 400px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #005f5f;
+        }
+        .content-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .content-container .box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 45%;
+        }
+        .box h3 {
+            color: #008080;
+        }
+        .box button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">Hospital Management System</div>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="#">Outpatients</a>
+            <a href="#">Doctors</a>
+            <a href="#">Appointments</a>
+            <a href="contact_us.html">Contact</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Hospital Finder</h2>
+        <div class="form-group">
+            <input type="text" id="hospitalSearch" placeholder="Type hospital name..." oninput="filterHospitals()">
+            <div class="suggestions" id="suggestionsList"></div>
+        </div>
+        
+        <!-- Containers for Token and Waiting Queue -->
+        <div class="content-container" id="detailsContainer" style="display: none;">
+            <div class="box" id="tokenBox">
+                <h3>Token</h3>
+                <a href="create.html">
+                <button>Create Token</button>
+                </a>
+                <p>Token details for the selected hospital will appear here.</p>
+            </div>
+            <div class="box" id="waitingQueueBox">
+                <h3>Waiting Queue</h3>
+                <a href="queue.html">
+                <button>Queue Info</button>
+                </a>
+                <p>Waiting queue information for the selected hospital will appear here.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hospitals = [
+            "Max Super Speciality Hospital",
+            "Fortis Hospital",
+            "Apollo Hospital",
+            "AIIMS",
+            "Kailash Hospital"
+        ];
+
+        function filterHospitals() {
+            const input = document.getElementById('hospitalSearch').value.toLowerCase();
+            const suggestions = document.getElementById('suggestionsList');
+            suggestions.innerHTML = '';
+            
+            if (input) {
+                const filteredHospitals = hospitals.filter(hospital => hospital.toLowerCase().includes(input));
+                filteredHospitals.forEach(hospital => {
+                    const div = document.createElement('div');
+                    div.textContent = hospital;
+                    div.onclick = () => selectHospital(hospital);
+                    suggestions.appendChild(div);
+                });
+                suggestions.style.display = filteredHospitals.length ? 'block' : 'none';
+            } else {
+                suggestions.style.display = 'none';
+            }
+        }
+
+        function selectHospital(hospitalName) {
+            document.getElementById('hospitalSearch').value = hospitalName;
+            document.getElementById('suggestionsList').style.display = 'none';
+            document.getElementById('detailsContainer').style.display = 'flex';
+           
+        }
+
+
+    </script>
+
+</body>
+</html>
