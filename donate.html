@@ -7,14 +7,14 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            background-color: white; /* Light red background */
             margin: 0;
             padding: 0;
             text-align: center;
         }
         .navbar {
             overflow: hidden;
-            background-color: #008080;
+            background-color: #004d66; /* Dark blue background */
             padding: 10px;
         }
         .navbar a {
@@ -24,10 +24,26 @@
             text-align: center;
             padding: 14px 20px;
             text-decoration: none;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transition for all properties */
+            position: relative; /* For pseudo-element positioning */
         }
         .navbar a:hover {
-            background-color: #005f5f;
-            color: white;
+            color: #ffffff;
+            transform: scale(1.1); /* Slightly enlarge the link */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
+        }
+        .navbar a::after {
+            content: ''; /* Empty content for pseudo-element */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            transform: scaleX(0); /* Start with zero width */
+            transition: transform 0.3s ease; /* Smooth transition for underline */
+        }
+        .navbar a:hover::after {
+            transform: scaleX(1); /* Expand underline on hover */
         }
         .container {
             margin-top: 50px;
@@ -37,7 +53,13 @@
             margin-right: auto;
         }
         h1 {
-            color: #008080;
+            color: #004d66; /* Dark blue */
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666; /* Dark gray for contrast */
+            margin: 0 0 20px;
+            font-size: 1.1em;
         }
         form {
             display: flex;
@@ -48,19 +70,25 @@
             padding: 10px;
             font-size: 1em;
             margin: 10px 0;
-            border: 1px solid #008080;
+            border: 1px solid #004d66; /* Dark blue border */
             border-radius: 5px;
             width: 100%;
             max-width: 400px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input:focus, button:focus {
+            border-color: #004d66; /* Slightly darker blue */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            outline: none;
         }
         button {
-            background-color: #008080;
+            background-color: #004d66; /* Dark blue background */
             color: white;
             border: none;
             cursor: pointer;
         }
         button:hover {
-            background-color: #005f5f;
+            background-color: #003366; /* Slightly darker blue */
         }
         .message {
             display: none;
@@ -69,18 +97,20 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: #ffffff;
-            border: 1px solid #008080;
+            border: 1px solid #004d66; /* Dark blue border */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
             z-index: 1000;
+            max-width: 90%;
+            width: 400px;
         }
         .message p {
-            margin: 0;
+            margin: 0 0 20px;
             font-size: 1.2em;
         }
         .message button {
-            background-color: #28a745;
+            background-color: #004d66; /* Green for the confirmation button */
             border: none;
             padding: 10px 20px;
             color: white;
@@ -89,7 +119,7 @@
             border-radius: 5px;
         }
         .message button:hover {
-            background-color: #218838;
+            background-color:  #004d66; /* Darker green on hover */
         }
     </style>
 </head>
@@ -100,7 +130,6 @@
         <a href="index.html">Home</a>
         <a href="opd_login.html">OPD</a>
         <a href="bed_availability.html">Bed Availability</a>
-        <a href="blood_bank.html">Blood Bank</a>
         <a href="contact_us.html">Contact Us</a>
         <a href="about_us.html">About Us</a>
     </div>
@@ -110,11 +139,11 @@
         <h1>Donate Blood</h1>
         <p>Please fill out the form below to register as a blood donor.</p>
         <form id="donateForm">
-            <input type="text" id="name" placeholder="Full Name" required>
-            <input type="email" id="email" placeholder="Email Address" required>
-            <input type="tel" id="phone" placeholder="Phone Number" required>
-            <input type="text" id="bloodType" placeholder="Blood Type" required>
-            <input type="text" id="city" placeholder="City" required>
+            <input type="text" id="name" aria-label="Full Name" placeholder="Full Name" required>
+            <input type="email" id="email" aria-label="Email Address" placeholder="Email Address" required>
+            <input type="tel" id="phone" aria-label="Phone Number" placeholder="Phone Number" required>
+            <input type="text" id="bloodType" aria-label="Blood Type" placeholder="Blood Type" required>
+            <input type="text" id="city" aria-label="City" placeholder="City" required>
             <button type="submit">Submit</button>
         </form>
     </div>
