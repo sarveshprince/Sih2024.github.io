@@ -7,82 +7,166 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
             margin: 0;
             padding: 0;
+            color: #333;
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
         }
+
+        /* Background Image */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/004/911/213/large_2x/single-blue-dna-background-dark-abstract-blue-structure-surface-texture-free-photo.jpg'); /* Replace with a hospital-themed image URL */
+            background-size: cover;
+            background-position: center;
+            filter: brightness(55%); /* Adjust opacity as needed */
+            z-index: -1;
+        }
+
         .navbar {
             overflow: hidden;
-            background-color: #008080;
-            padding: 10px;
+            padding: 15px;
+            box-shadow: 7px 15px 15px rgb(18, 17, 17);
+            position: relative;
         }
+
         .navbar a {
             float: left;
             display: block;
             color: #ffffff;
             text-align: center;
-            padding: 14px 20px;
+            padding: 16px 24px;
             text-decoration: none;
+            font-size: 18px;
+            position: relative;
+            transition: color 0.3s, transform 0.3s;
         }
+
         .navbar a:hover {
-            background-color: #005f5f;
-            color: white;
+            color: #ffd700;
+            transform: scale(1.1);
         }
+
+        .navbar .popup {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 200px;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .navbar .popup a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+        }
+
+        .navbar .popup a:hover {
+            background-color: #555;
+        }
+
         .container-wrapper {
             display: flex;
             justify-content: space-around;
-            margin-top: 60px;
+            margin-top: 100px;
+            padding: 20px;
         }
+
         .container {
-            width: 28%;
+            width: 30%;
             padding: 20px;
             background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .container:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            
+            border-bottom: 5px solid #fff;
+        }
+
         .container h2 {
             text-align: center;
-            margin-bottom: 20px;
-            color: #008080;
+            margin-bottom: 15px;
+            color: #004d66;
         }
+
         .container p {
             text-align: center;
             color: #555;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+
         .container button {
-            background-color: #008080;
+            background-color: #004d66;
             color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
+            padding: 16px 24px;
+            margin: 10px 0;
             border: none;
             cursor: pointer;
             width: 100%;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 18px;
         }
+
         .container button:hover {
-            background-color: #005f5f;
+            background-color: #00334d;
         }
+
         .footer {
             text-align: center;
-            margin-top: 40px;
-            color: #777;
+            margin-top: 50px;
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
 
+    <!-- Background Image with Reduced Opacity -->
+    <div class="background"></div>
+
     <div class="navbar">
         <a href="https://ors.gov.in/healthid/index.jsp?NICSecurityORS=X8XW-D76K-CTNY-LBOF-3T8T-BOK9-5WU8-MESN">Create ABHA ID</a>
         <a href="contact_us.html">Contact Us</a>
         <a href="about_us.html">About Us</a>
+        <div class="popup" id="popup">
+            <a href="#">Special Info 1</a>
+            <a href="#">Special Info 2</a>
+            <a href="#">Special Info 3</a>
+        </div>
     </div>
 
     <div class="container-wrapper">
         <div class="container">
             <h2>OPD's</h2>
             <p>Manage outpatient department services and appointments.</p>
-            <!-- Link to OPD Login Page -->
             <a href="opd_login.html">
                 <button type="button">Login to OPD</button>
             </a>
@@ -91,14 +175,14 @@
             <h2>Bed Availability</h2>
             <p>Check and manage the availability of beds in the hospital.</p>
             <a href="bed_availability.html">
-            <button type="button">Bed Availability</button>
+                <button type="button">Bed Availability</button>
             </a>
         </div>
         <div class="container">
             <h2>Blood Bank</h2>
             <p>Donate or request blood to save lives.</p>
             <a href="bloodbank.html">
-            <button type="button">Blood Bank</button>
+                <button type="button">Blood Bank</button>
             </a>
         </div>
     </div>
@@ -106,6 +190,13 @@
     <div class="footer">
         <p>&copy; 2024 Medical Center. All rights reserved.</p>
     </div>
+
+    <script>
+        document.querySelector('.navbar').addEventListener('click', function(event) {
+            const popup = document.getElementById('popup');
+            popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+        });
+    </script>
 
 </body>
 </html>
