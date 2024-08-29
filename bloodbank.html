@@ -5,56 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blood Bank</title>
     <style>
+        /* Ensure the video covers the entire background */
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Ensures the video is behind all other content */
+            filter: brightness(55%);
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f8ff;
+            background-color: #f0f8ff; /* Fallback color if video fails to load */
             text-align: center;
+            color: #fff; /* Default text color to white for better readability on dark backgrounds */
         }
+
         .navbar {
             overflow: hidden;
-            background-color: #008080;
             padding: 10px;
+            box-shadow: 7px 15px 15px rgba(0, 0, 0, 0.3);
+           
         }
+
         .navbar a {
             float: left;
             display: block;
-            color: #ffffff;
             text-align: center;
             padding: 14px 20px;
             text-decoration: none;
-        }
-        .navbar a:hover {
-            background-color: #005f5f;
             color: white;
+            transition: color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
         }
+
+        .navbar a:hover {
+            color: rgb(238, 255, 0);
+            transform: scale(1.05); /* Subtle scaling effect */
+        }
+
         header {
-            background-color: #008080;
             color: white;
             padding: 20px 0;
+           /* Semi-transparent background for better text visibility */
         }
+
         header h1 {
             margin: 0;
             font-size: 2.5em;
         }
+
         header p {
             margin: 0;
             font-size: 1.2em;
         }
+
         main {
             padding: 40px 20px;
         }
+
         main h2 {
             font-size: 2em;
-            color: #343a40;
+            color: #fff; /* Ensure text is visible against the video background */
         }
+
         main p {
             font-size: 1.2em;
-            color: #495057;
+            color: #ddd; /* Slightly lighter color for paragraph text */
             max-width: 800px;
             margin: 20px auto;
         }
+
         .button-group a {
             text-decoration: none;
             color: white;
@@ -63,26 +88,61 @@
             font-size: 1.2em;
             margin: 10px;
             display: inline-block;
+            transition: all 0.3s ease; /* Smooth transition for all properties */
+            position: relative; /* Position for pseudo-elements */
         }
+
         .button-group a.donate {
-            background-color: #28a745;
+            background-color: #0b3f17;
         }
+
         .button-group a.request {
-            background-color: #007bff;
+            background-color: #412f89;
         }
+
         .button-group a:hover {
             opacity: 0.9;
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow effect */
+        }
+
+        .button-group a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1); /* Light overlay effect */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 5px;
+            z-index: 0; /* Behind text */
+        }
+
+        .button-group a:hover::before {
+            opacity: 1;
+        }
+
+        .button-group a span {
+            position: relative;
+            z-index: 1; /* Above the overlay effect */
         }
     </style>
 </head>
 <body>
+
+    <!-- Background Video -->
+    <video class="background-video" autoplay muted loop>
+        <source src="mprtyr.mp4.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
     <!-- Navigation Bar -->
     <div class="navbar">
         <a href="index.html">Home</a>
         <a href="opd_login.html">OPD</a>
         <a href="bed_availability.html">Bed Availability</a>
-        <a href="blood_bank.html">Blood Bank</a>
         <a href="contact_us.html">Contact Us</a>
         <a href="about_us.html">About Us</a>
     </div>
@@ -95,15 +155,15 @@
 
     <!-- Main Content Section -->
     <main>
-        <h2>Welcome to the Blood Bank</h2>
+        <h3>Welcome to the Blood Bank</h3>
         <p>
             We are dedicated to ensuring that every blood donor and recipient receives the best care.
             Use our platform to donate blood, request blood, or learn more about the impact of your donation.
         </p>
         
         <div class="button-group">
-            <a href="donate.html" class="donate">Donate Blood</a>
-            <a href="requestblood.html" class="request">Request Blood</a>
+            <a href="donate.html" class="donate"><span>Donate Blood</span></a>
+            <a href="requestblood.html" class="request"><span>Request Blood</span></a>
         </div>
     </main>
 
