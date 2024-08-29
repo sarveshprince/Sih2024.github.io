@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: white; /* Light red background */
+            background-color: white;
             margin: 0;
             padding: 0;
             text-align: center;
@@ -24,26 +24,26 @@
             text-align: center;
             padding: 14px 20px;
             text-decoration: none;
-            transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transition for all properties */
-            position: relative; /* For pseudo-element positioning */
+            transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
         .navbar a:hover {
             color: #ffffff;
-            transform: scale(1.1); /* Slightly enlarge the link */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         .navbar a::after {
-            content: ''; /* Empty content for pseudo-element */
+            content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 3px;
-            transform: scaleX(0); /* Start with zero width */
-            transition: transform 0.3s ease; /* Smooth transition for underline */
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
         .navbar a:hover::after {
-            transform: scaleX(1); /* Expand underline on hover */
+            transform: scaleX(1);
         }
         .container {
             margin-top: 50px;
@@ -53,11 +53,11 @@
             margin-right: auto;
         }
         h1 {
-            color: #004d66; /* Dark blue */
+            color: #004d66;
             margin-bottom: 10px;
         }
         p {
-            color: #666; /* Dark gray for contrast */
+            color: #666;
             margin: 0 0 20px;
             font-size: 1.1em;
         }
@@ -70,47 +70,55 @@
             padding: 10px;
             font-size: 1em;
             margin: 10px 0;
-            border: 1px solid #004d66; /* Dark blue border */
+            border: 1px solid #004d66;
             border-radius: 5px;
             width: 100%;
             max-width: 400px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
         input:focus, button:focus {
-            border-color: #004d66; /* Slightly darker blue */
+            border-color: #004d66;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
             outline: none;
         }
         button {
-            background-color: #004d66; /* Dark blue background */
+            background-color: #004d66;
             color: white;
             border: none;
             cursor: pointer;
         }
         button:hover {
-            background-color: #003366; /* Slightly darker blue */
+            background-color: #003366;
+        }
+        .blurred-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
         .message {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             background-color: #ffffff;
-            border: 1px solid #004d66; /* Dark blue border */
+            border: 1px solid #004d66;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
-            z-index: 1000;
             max-width: 90%;
             width: 400px;
+            text-align: center;
         }
         .message p {
             margin: 0 0 20px;
             font-size: 1.2em;
         }
         .message button {
-            background-color: #004d66; /* Green for the confirmation button */
+            background-color: #004d66;
             border: none;
             padding: 10px 20px;
             color: white;
@@ -119,7 +127,7 @@
             border-radius: 5px;
         }
         .message button:hover {
-            background-color:  #004d66; /* Darker green on hover */
+            background-color: #003366;
         }
     </style>
 </head>
@@ -148,21 +156,23 @@
         </form>
     </div>
 
-    <!-- Confirmation Message -->
-    <div class="message" id="confirmationMessage">
-        <p>Your request has been sent successfully!</p>
-        <p>You will receive a call soon from our side to get more information about donating blood.</p>
-        <button onclick="closeMessage()">OK</button>
+    <!-- Blurred Background and Confirmation Message -->
+    <div id="popup" class="blurred-background">
+        <div class="message">
+            <p>Your request has been sent successfully!</p>
+            <p>You will receive a call soon from our side to get more information about donating blood.</p>
+            <button onclick="closeMessage()">OK</button>
+        </div>
     </div>
 
     <script>
         document.getElementById('donateForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            document.getElementById('confirmationMessage').style.display = 'block';
+            document.getElementById('popup').style.display = 'flex';
         });
 
         function closeMessage() {
-            document.getElementById('confirmationMessage').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
         }
     </script>
 
