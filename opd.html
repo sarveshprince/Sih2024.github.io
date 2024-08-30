@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Password</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #004d66;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color:#004d66;
+            color: #e0f7fa;
+            border-radius: 4px;
+            transform: scale(1.1);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Main Content */
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color:#004d66;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 12px;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            background-color:#004d66;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color:#004d66;
+        }
+
+        p {
+            margin-top: 20px;
+            color:black;
+        }
+
+        a {
+            color:#004d66;
+            text-decoration:none;
+        }
+
+        /* Footer */
+        .footer {
+          color: white;
+            text-align: center;
+            padding: 15px;
+            background-color:#004d66;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+        .kk{
+          margin-top: 20px;
+          color:rgb(185, 125, 51);
+          font-size: medium;
+          font-weight: bolder;
+        
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">Hospital Management System</div>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="#">Outpatients</a>
+            <a href="#">Doctors</a>
+            <a href="#">Appointments</a>
+            <a href="contact_us.html">Contact</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Log In
+        </h2>
+        
+        <form id="passwordForm">
+            <input type="text" name="abha_id" placeholder="Enter your ABHA ID" required>
+            <input type="password" name="confirm_new_password" placeholder="Enter Your Password" required>
+            <button type="submit">Log In</button>
+        </form>
+
+        <p>If you don't have an ABHA ID, <a href="/create_abha" class="kk">Create ABHA ID</a></p>
+        <p>New User, <a href="/opd_login.html" class="kk">Create Password</a></p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2024 Hospital Management System
+    </div>
+
+    <script>
+        document.getElementById('passwordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            // Redirect to token.html
+            window.location.href = 'token.html';
+        });
+    </script>
+
+</body>
+</html>
